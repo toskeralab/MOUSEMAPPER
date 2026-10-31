@@ -1,0 +1,20 @@
+# Build
+bin/
+obj/
+dist/
+publish/
+artifacts/
+*.user
+*.suo
+.vs/
+
+# Artefatos locais do app (não versionar dados do usuário)
+automations.json
+automations.json.tmp
+automations.json.bak
+automations.json.corrupt-*
+logs/
+
+# Sistema
+.DS_Store
+Thumbs.db

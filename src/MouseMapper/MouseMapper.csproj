@@ -1,0 +1,58 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <!-- Necessário para o NotifyIcon (bandeja do sistema). O WPF não tem API nativa de tray. -->
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+
+    <AssemblyName>MouseMapper</AssemblyName>
+    <RootNamespace>MouseMapper</RootNamespace>
+    <Product>MOUSEMAPPER</Product>
+    <AssemblyTitle>MOUSEMAPPER</AssemblyTitle>
+    <Description>Gravador de macros de mouse com atalhos globais de teclado.</Description>
+    <Company>Toskera Lab</Company>
+    <Version>1.0.0</Version>
+    <FileVersion>1.0.0.0</FileVersion>
+    <NeutralLanguage>pt-BR</NeutralLanguage>
+
+    <!-- Ícone do executável e da janela/bandeja -->
+    <ApplicationIcon>Assets/mousemapper.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+
+    <!-- Publicação portable: um único .exe self-contained (win-x64) -->
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <!-- WPF não suporta trimming: manter explicitamente desligado -->
+    <PublishTrimmed>false</PublishTrimmed>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+
+    <!-- Permite compilar o alvo Windows em Linux/macOS (CI). Não afeta o .exe gerado. -->
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+
+    <!-- WFAC010: o aviso do WinForms sobre DPI não se aplica ao WPF (usamos o manifesto). -->
+    <NoWarn>$(NoWarn);WFAC010</NoWarn>
+  </PropertyGroup>
+
+  <!--
+    O WinForms adiciona System.Drawing e System.Windows.Forms aos usings implícitos,
+    o que cria ambiguidade com System.Windows.Media (Brush) e System.Windows (Application).
+    Removemos esses usings globais; o tray usa o alias WinForms.
+  -->
+  <ItemGroup>
+    <Using Remove="System.Drawing" />
+    <Using Remove="System.Windows.Forms" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets/mousemapper.ico" />
+  </ItemGroup>
+
+</Project>
